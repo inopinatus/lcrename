@@ -1,0 +1,60 @@
+.\" Manpage for lcrename
+.\" MIT License
+.TH LCRENAME 1 "12 Jan 2024" "inopinatus" "lcrename User Manual"
+.SH NAME
+lcrename \- rename files in place to a lowercase form
+.SH SYNOPSIS
+.B lcrename
+.RI [ -v ]
+.RI [ -0 ]
+.RI [ -- ]
+.RI [ files... ]
+.SH DESCRIPTION
+.PP
+.B lcrename
+is a utility for renaming files to their lowercase form on MacOS,
+even on case-insensitive filesystems.
+.PP
+The options are as follows:
+.TP
+.BI -v
+Verbose output.
+.TP
+.BI -0
+Expect NUL ('\\0')-terminated filename strings on stdin.
+.TP
+.BI --
+End of options processing; all subsequent arguments are files.
+.PP
+File paths may be passed as arguments, or from standard input, but
+not both.  Either absolute and relative paths may be given.  Relative
+paths will be resolved from the current working directory.  Filenames
+must be an exact match for their current capitalisation.
+.PP
+Files that do not exist, or for which a conflicting file with a
+lower-case name already exists, will be skipped with a warning.
+.SH EXAMPLES
+Rename all TXT files in current directory to use lowercase:
+.PP
+.nf
+\fBlcrename *.TXT\fR
+.fi
+.PP
+Find and rename potentially many files scattered about:
+.PP
+.nf
+\fBfind ~/Documents/*.txt -print0 | lcrename -0\fR
+.fi
+.PP
+Rename a file supplied from user input:
+.PP
+.nf
+\fBread FILENAME\fR
+\fBlcrename -- "$FILENAME"\fR
+.fi
+.SH CONTRIBUTING
+.PP
+Visit the Github project: https://github.com/inopinatus/lcrename
+.SH SEE ALSO
+.BR find (1),
+.BR mv (1)
